@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Cookies - Spring Boot</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .tarjeta {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 { color: #1a73e8; margin-top: 0; }
+        p { color: #5f6368; font-size: 14px; margin-bottom: 25px; }
+
+        /* Estilos de la caja de resultados */
+        .pantalla-resultado {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #e8f0fe;
+            color: #1967d2;
+            font-weight: bold;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #d2e3fc;
+        }
+
+        /* Estilos de los botones */
+        button {
+            border: none;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+        .btn-crear { background-color: #34a853; color: white; }
+        .btn-crear:hover { background-color: #2d9047; }
+
+        .btn-leer { background-color: #1a73e8; color: white; }
+        .btn-leer:hover { background-color: #1557b0; }s
+
+        .btn-eliminar { background-color: #ea4335; color: white; }
+        .btn-eliminar:hover { background-color: #ce3a2e; }
+    </style>
+</head>
+<body>
+
+<div class="tarjeta">
+    <h1> Panel de Sesión</h1>
+    <p>Interactúa</p>
+
+    <div id="pantalla" class="pantalla-resultado">
+        Esperando acción...
+    </div>
+
+    <button class="btn-leer" onclick="ejecutarAccion('/leer-cookie')"> Leer Cookie Actual</button>
+    <button class="btn-crear" onclick="ejecutarAccion('/crear-cookie')"> Crear Nueva Cookie</button>
+    <button class="btn-eliminar" onclick="ejecutarAccion('/eliminar-cookie')">️ Eliminar Cookie</button>
+</div>
+
+<script>
+    // Esta función de JavaScript se encarga de hablar con tu código Java por debajo
+    function ejecutarAccion(rutaDelServidor) {
+        const pantalla = document.getElementById('pantalla');
+        pantalla.innerText = "Cargando respuesta...";
+
+        // fetch() hace exactamente lo mismo que hacías tú al escribir la URL en el navegador
+        fetch(rutaDelServidor)
+            .then(respuesta => respuesta.text()) // Leemos el texto que tu Java envía (el "return")
+            .then(textoDeJava => {
+                pantalla.innerText = textoDeJava; // Mostramos el texto en la cajita azul
+            })
+            .catch(error => {
+                pantalla.innerText = " Error de conexión con Spring Boot";
+            });
+    }
+</script>
+</body>
+</html>
